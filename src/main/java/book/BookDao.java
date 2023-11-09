@@ -5,6 +5,9 @@
  */
 package book;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.List;
 import repository.Dao;
 
 /**
@@ -14,6 +17,46 @@ import repository.Dao;
 public abstract class BookDao extends Dao<Book>{
     public final String TABLE = "book";
 
+    @Override
+    public String getSaveStatement(){
+        return "INSET INTO "+ TABLE + "(title, authors, acquisition, pages, year, edition, price) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    }
+    
+    @Override
+    public String getUpdateStatement(){
+        return "UPDATE " + TABLE + "SET title = ?, authors = ?, acquisition = ?, pages = ?, year = ?, edition = ?, price = ? WHERE id = ?";
+    }
+    
+    @Override
+    public String getFindByIdStatement(){
+        return "SELECT title, authors, acquisition, pages, year, edition, price FROM" + TABLE + "WHERE id = ?";
+    }
+    
+    @Override
+    public String getFindAllStatement(){
+        return "SELECT title, authors, acquisition, pages, year, edition, price FROM " + TABLE;
+    }
+    
+    @Override
+    public String getDeleteStatement(){
+        return "DELETE FROM " + TABLE + "WHERE id = ?";
+    }
+    
+    @Override
+    public void coposeSaveOrUpdateStatement(PreparedStatement pststm, Book e){
+        
+    }
+    
+    @Override
+    public Book extractObject(ResultSet rs){
+        return new Book();
+    }
+    
+    @Override
+    public List<Book> extractObjects(ResultSet rs){
+        return null;
+    }
+    
     public BookDao() {
     }
 

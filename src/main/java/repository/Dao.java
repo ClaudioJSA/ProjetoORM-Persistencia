@@ -52,7 +52,7 @@ public abstract class Dao<E> implements IDao<E>{
             pstmt.setLong(1, id);
             ResultSet resultSet = pstmt.executeQuery();
             if(resultSet.next())
-                return extractObject();
+                return extractObject(resultSet);
         return null;
         }catch(Exception ex){
             System.out.println("Ex: "+ex);

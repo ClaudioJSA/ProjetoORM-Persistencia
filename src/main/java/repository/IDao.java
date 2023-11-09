@@ -22,7 +22,7 @@ public interface IDao<E>{
     public String getFindAllStatement();
     public String getDeleteStatement();
     public void coposeSaveOrUpdateStatement(PreparedStatement pstmt, E e);
-    public E extractObject();
+    public E extractObject(ResultSet rs);
     public List<E> extractObjects(ResultSet rs);
     public Long saveOrUpdate(E e);
     public E findById(Long id);
