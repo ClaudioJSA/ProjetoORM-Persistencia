@@ -9,11 +9,8 @@ import entity.Entity;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -42,26 +39,46 @@ public abstract class Dao<E> implements IDao<E>{
                 coposeSaveOrUpdateStatement(pstmt, e);
                 pstmt.executeUpdate();
                 id = ((Entity)e).getId();
-            } catch (SQLException ex) {
-                Logger.getLogger(Dao.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (Exception ex) {
+                System.out.println("Ex: "+ ex);
             }
         }
         return id;
     }
 
     @Override
-    public E fidById() {
+    public E findById(Long id) {
+        try(PreparedStatement pstmt = DbConnection.getConnection().prepareStatement(getFindByIdStatement())){
+            pstmt.setLong(1, id);
+            ResultSet resultSet = pstmt.executeQuery();
+            if(resultSet.next())
+                return extractObject();
+        return null;
+        }catch(Exception ex){
+            System.out.println("Ex: "+ex);
+        }
         return null;
     }
 
     @Override
-    public List fidAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<E> fidAll() {
+        try ( PreparedStatement pstsmt = DbConnection.getConnection().prepareStatement(getFindAllStatement())) {
+            ResultSet resultSet = pstsmt.executeQuery();
+            return extractObjects(resultSet);
+        } catch (Exception ex) {
+            System.out.println("Exception: " + ex);
+        }
+        return null;
     }
 
     @Override
     public void delete(Long id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try(PreparedStatement pstmt = DbConnection.getConnection().prepareStatement(getDeleteStatement())){
+            ResultSet resultSet = pstmt.executeQuery();
+            System.out.println("Exclusão executada com sucesso.");
+        } catch (Exception ex) {
+            System.out.println("Ex:" + ex);
+        }
     }
     
 }

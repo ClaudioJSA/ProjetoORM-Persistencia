@@ -23,9 +23,9 @@ public interface IDao<E>{
     public String getDeleteStatement();
     public void coposeSaveOrUpdateStatement(PreparedStatement pstmt, E e);
     public E extractObject();
-    public List<E> extratctObjects(ResultSet rs);
+    public List<E> extractObjects(ResultSet rs);
     public Long saveOrUpdate(E e);
-    public E fidById();
+    public E findById(Long id);
     public List<E> fidAll();
     public void delete(Long id);
             
