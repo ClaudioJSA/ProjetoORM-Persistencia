@@ -5,9 +5,14 @@
  */
 package book;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import repository.Dao;
 
 /**
@@ -44,17 +49,55 @@ public abstract class BookDao extends Dao<Book>{
     
     @Override
     public void coposeSaveOrUpdateStatement(PreparedStatement pststm, Book e){
-        
+        try {
+            pststm.setString(1, e.getTitle());
+            pststm.setString(2, e.getAuthors());
+            pststm.setDate(3, Date.valueOf(e.getAcquisition()));
+            pststm.setShort(4, e.getPages());
+            pststm.setShort(5, e.getYear());
+            pststm.setByte(6, e.getEdition());
+            pststm.setBigDecimal(7, e.getPrice());
+        } catch (SQLException ex) {
+            Logger.getLogger(BookDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     @Override
     public Book extractObject(ResultSet rs){
-        return new Book();
+        Book book = new Book();
+        try{
+            book.setTitle(rs.getString("title"));
+            book.setAuthors(rs.getString("authors"));
+            book.setAcquisition(rs.getDate("acquisition").toLocalDate());
+            book.setPages(rs.getShort("pages"));
+            book.setYear(rs.getShort("year"));
+            book.setEdition(rs.getByte("edition"));
+            book.setPrice(rs.getBigDecimal("price"));
+        }catch(SQLException ex){
+                System.out.println("Ex: " + ex);      
+        }
+        return book;
     }
     
     @Override
     public List<Book> extractObjects(ResultSet rs){
-        return null;
+        List<Book> books = new ArrayList<>();
+        try{
+            while(rs.next()){
+                Book book = new Book();
+                book.setTitle(rs.getString("title"));
+                book.setAuthors(rs.getString("authors"));
+                book.setAcquisition(rs.getDate("acquisition").toLocalDate());
+                book.setPages(rs.getShort("pages"));
+                book.setYear(rs.getShort("year"));
+                book.setEdition(rs.getByte("edition"));
+                book.setPrice(rs.getBigDecimal("price"));
+                books.add(book);
+            }
+        }catch(SQLException ex){
+                System.out.println("Ex: " + ex);      
+        }
+        return books;
     }
     
     public BookDao() {
