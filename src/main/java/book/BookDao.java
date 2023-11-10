@@ -18,6 +18,7 @@ import repository.Dao;
 /**
  *
  * @author Claudio Alcantara &lt;claudio.alcantara at ifnmg.edi.br&gt;
+ * 
  */
 public abstract class BookDao extends Dao<Book>{
     public final String TABLE = "book";
@@ -73,7 +74,7 @@ public abstract class BookDao extends Dao<Book>{
             book.setYear(rs.getShort("year"));
             book.setEdition(rs.getByte("edition"));
             book.setPrice(rs.getBigDecimal("price"));
-        }catch(SQLException ex){
+        }catch(Exception ex){
                 System.out.println("Ex: " + ex);      
         }
         return book;
@@ -94,7 +95,7 @@ public abstract class BookDao extends Dao<Book>{
                 book.setPrice(rs.getBigDecimal("price"));
                 books.add(book);
             }
-        }catch(SQLException ex){
+        }catch(Exception ex){
                 System.out.println("Ex: " + ex);      
         }
         return books;
