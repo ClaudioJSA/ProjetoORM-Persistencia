@@ -28,6 +28,7 @@ public abstract class Dao<E> implements IDao<E>{
         if (((Entity) e).getId() == null|| ((Entity) e).getId() == 0){
             try(PreparedStatement pstmt = DbConnection.getConnection().prepareStatement(getSaveStatement(),Statement.RETURN_GENERATED_KEYS)){
                 coposeSaveOrUpdateStatement(pstmt, e);
+                System.out.println(pstmt);
                 pstmt.executeUpdate();
                 ResultSet resultSet = pstmt.getGeneratedKeys();
                 if(resultSet.next()){
@@ -39,6 +40,7 @@ public abstract class Dao<E> implements IDao<E>{
         } else{
             try(PreparedStatement pstmt = DbConnection.getConnection().prepareStatement(getUpdateStatement())){
                 coposeSaveOrUpdateStatement(pstmt, e);
+                System.out.println(pstmt);
                 pstmt.executeUpdate();
                 id = ((Entity)e).getId();
             } catch (Exception ex) {
@@ -52,6 +54,7 @@ public abstract class Dao<E> implements IDao<E>{
     public E findById(Long id) {
         try(PreparedStatement pstmt = DbConnection.getConnection().prepareStatement(getFindByIdStatement())){
             pstmt.setLong(1, id);
+            System.out.println(pstmt);
             ResultSet resultSet = pstmt.executeQuery();
             if(resultSet.next())
                 return extractObject(resultSet);
@@ -65,6 +68,7 @@ public abstract class Dao<E> implements IDao<E>{
     @Override
     public List<E> fidAll() {
         try ( PreparedStatement pstsmt = DbConnection.getConnection().prepareStatement(getFindAllStatement())) {
+            System.out.println(pstsmt);
             ResultSet resultSet = pstsmt.executeQuery();
             return extractObjects(resultSet);
         } catch (Exception ex) {
@@ -76,7 +80,9 @@ public abstract class Dao<E> implements IDao<E>{
     @Override
     public void delete(Long id) {
         try(PreparedStatement pstmt = DbConnection.getConnection().prepareStatement(getDeleteStatement())){
-            ResultSet resultSet = pstmt.executeQuery();
+            pstmt.setLong(1, id);
+            System.out.println(pstmt);
+            pstmt.executeUpdate();
             System.out.println("Exclusão executada com sucesso.");
         } catch (Exception ex) {
             System.out.println("Ex:" + ex);

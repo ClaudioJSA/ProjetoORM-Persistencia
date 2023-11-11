@@ -30,12 +30,12 @@ public class BookDao extends Dao<Book>{
     
     @Override
     public String getUpdateStatement(){
-        return "UPDATE " + TABLE + "SET title = ?, authors = ?, acquisition = ?, pages = ?, year = ?, edition = ?, price = ? WHERE id = ?";
+        return "UPDATE " + TABLE + " SET title = ?, authors = ?, acquisition = ?, pages = ?, year = ?, edition = ?, price = ? WHERE id = ?";
     }
     
     @Override
     public String getFindByIdStatement(){
-        return "SELECT title, authors, acquisition, pages, year, edition, price FROM" + TABLE + "WHERE id = ?";
+        return "SELECT title, authors, acquisition, pages, year, edition, price FROM " + TABLE + " WHERE id = ?";
     }
     
     @Override
@@ -45,7 +45,7 @@ public class BookDao extends Dao<Book>{
     
     @Override
     public String getDeleteStatement(){
-        return "DELETE FROM " + TABLE + "WHERE id = ?";
+        return "DELETE FROM " + TABLE + " WHERE id = ?";
     }
     
     @Override

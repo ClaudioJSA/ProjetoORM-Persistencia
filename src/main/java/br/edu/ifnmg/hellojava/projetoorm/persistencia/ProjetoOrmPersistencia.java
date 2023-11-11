@@ -10,6 +10,7 @@ import book.BookDao;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.List;
 
 /**
  *
@@ -19,8 +20,10 @@ public class ProjetoOrmPersistencia {
     public static void main(String[] args) {
         Book book = new Book();
         Long id;
+        List<Book> books;
  
-///2.1. tentativa de criação de um livro com data de aquisição com 3 dias posteriores ao dia corrente;
+//<editor-fold defaultstate="collapsed" desc="2.1. Tentativa de criação de um livro com data de aquisição com 3 dias posteriores ao dia corrente;">
+        System.out.println("2.1. Tentativa de criação de um livro com data de aquisição com 3 dias posteriores ao dia corrente;");
         try{
             book.setTitle("Dom Casmurro");
             book.setAuthors("Machado de Assis");
@@ -36,8 +39,10 @@ public class ProjetoOrmPersistencia {
         }catch(Exception ex){
             System.out.println(ex);
         }
-        
-///2.2. a inclusão de três livros com dados à escolha;
+//</editor-fold>   
+ 
+//<editor-fold defaultstate="collapsed" desc=".2. A inclusão de três livros com dados à escolha;">
+        System.out.println("\n2.2. A inclusão de três livros com dados à escolha;");
         try{
             book.setTitle("O cortiço");
             book.setAuthors("Aluísio Tancredo Gonçalves de Azevedo");
@@ -82,6 +87,63 @@ public class ProjetoOrmPersistencia {
         }catch(Exception ex){
             System.out.println(ex);
         }
+//</editor-fold>
+
+//<editor-fold defaultstate="collapsed" desc="2.4. A localização por ID de dois livros à escolha;">
+        System.out.println("\n2.4. A localização por ID de dois livros à escolha;");
+        try{
+            id = 1L;
+            book = new BookDao().findById(id);
+            book.setId(id);
+            System.out.println(">> " + book);
+        }catch(Exception ex){
+            System.out.println("Id do livro não encontrado.\n" + ex);
+        }
         
+        try{
+            id = 3L;
+            book = new BookDao().findById(id);
+            book.setId(id);
+            System.out.println(">> " + book);
+        }catch(Exception ex){
+            System.out.println("Id do livro não encontrado.\n" + ex);
+        }
+//</editor-fold>
+
+//<editor-fold defaultstate="collapsed" desc="2.3. a atualização de um livro à escolha;">
+        ///Considerando o livro encontrado anteriormente para fazer a atualização, 
+        System.out.println("\n2.3. a atualização de um livro à escolha;");
+        try{
+            book.setAcquisition(LocalDate.of(2023, Month.NOVEMBER, 10));
+            book.setEdition((byte)7);
+            book.setPrice(BigDecimal.valueOf(75.36));
+            System.out.println(">> " + book);
+            new BookDao().saveOrUpdate(book);
+        }catch(Exception ex){
+            System.out.println(ex);
+        }
+//</editor-fold>
+
+//<editor-fold defaultstate="collapsed" desc="2.5. a carga de todos os livros;">
+        System.out.println("\n2.5. a carga de todos os livros;");
+        try{
+            books=new BookDao().fidAll();
+            books.forEach(aux -> {
+                System.out.println(">> " + aux);
+            });
+        }catch(Exception ex){
+            System.out.println(ex);
+        }
+//</editor-fold>
+
+//<editor-fold defaultstate="collapsed" desc="2.6. e a remoção de um livro à escolha.">
+        System.out.println("\n2.6. e a remoção de um livro à escolha.");
+        try{
+            id = 2L;
+            new BookDao().delete(id);
+        }catch(Exception ex){
+            System.out.println(ex);
+        }
+//</editor-fold>
     }
 }

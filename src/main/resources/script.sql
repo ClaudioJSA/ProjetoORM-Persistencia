@@ -10,11 +10,11 @@
 
 CREATE TABLE book(
     id INT PRIMARY KEY AUTO_INCREMENT,
-    title VARCHAR(150),
-    authors VARCHAR(250),
+    title VARCHAR(150) NOT NULL,
+    authors VARCHAR(250) NOT NULL,
     acquisition DATE,
     pages SMALLINT,
-    year SMALLINT,
+    year SMALLINT NOT NULL,
     edition TINYINT,
-    price DECIMAL
+    price DECIMAL(10,8)
 );

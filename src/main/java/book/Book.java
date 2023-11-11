@@ -100,5 +100,12 @@ public class Book extends Entity{
         this.price = price;
     }
 //</editor-fold>
+
+    @Override
+    public String toString() {
+        return "Book{" + "title=" + title + ", authors=" + authors + ", acquisition=" + acquisition + ", pages=" + pages + ", year=" + year + ", edition=" + edition + ", price=" + price + '}';
+    }
+    
+    
     
 }
