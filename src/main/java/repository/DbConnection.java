@@ -22,7 +22,11 @@ public class DbConnection {
     private static final String PASSWORD;
     
     static{
-        URL = "jdbc:mysql://localhost:3306/" + Dao.DB;
+        URL = "jdbc:mysql://localhost:3306/" + Dao.DB
+                + "?useUnicode=true"
+                + "&useJDBCCompliantTimezoneShift=true"
+                + "&serverTimezone=UTC"
+                + "&autoReconnect=true";
         USER = "root";
         PASSWORD = "admin";
     }
