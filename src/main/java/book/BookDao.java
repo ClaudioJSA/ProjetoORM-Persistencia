@@ -20,7 +20,7 @@ import repository.Dao;
  * @author Claudio Alcantara &lt;claudio.alcantara at ifnmg.edi.br&gt;
  * 
  */
-public abstract class BookDao extends Dao<Book>{
+public class BookDao extends Dao<Book>{
     public final String TABLE = "book";
 
     @Override
@@ -97,7 +97,7 @@ public abstract class BookDao extends Dao<Book>{
             }
         }catch(Exception ex){
                 System.out.println("Ex: " + ex);      
-        }
+        }   
         return books;
     }
     

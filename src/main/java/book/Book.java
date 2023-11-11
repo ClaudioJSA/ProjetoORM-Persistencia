@@ -51,7 +51,7 @@ public class Book extends Entity{
 
     public void setAcquisition(LocalDate acquisition) throws Exception {
         if(acquisition.isAfter(LocalDate.now())){
-            throw new Exception("A data que aquisição não pode ser depois da data atual.");
+            throw new Exception("A data de aquisição não pode ser depois da data atual.");
         }
         this.acquisition = acquisition;
     }
