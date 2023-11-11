@@ -22,9 +22,9 @@ public class DbConnection {
     private static final String PASSWORD;
     
     static{
-        URL = "";
-        USER = "";
-        PASSWORD = "";
+        URL = "jdbc:mysql://localhost:3306/" + Dao.DB;
+        USER = "root";
+        PASSWORD = "admin";
     }
 
     public DbConnection() {
@@ -33,7 +33,7 @@ public class DbConnection {
     public static Connection getConnection() throws SQLException{
         if(connection == null){
             try{
-                System.out.println("Connection to database.");
+                System.out.println("Connecting to database.");
                 connection = DriverManager.getConnection(URL, USER, PASSWORD);
             }catch(SQLException ex){
                 Logger.getLogger(DbConnection.class.getName()).log(Level.SEVERE, null, ex);

@@ -18,13 +18,15 @@ import java.util.List;
  * @param <E>
  */
 public abstract class Dao<E> implements IDao<E>{
+    
+    public static final String DB = "projetoormpersistencia";
 
     @Override
     public Long saveOrUpdate(E e) {
         Long id = 0L;
         
         if (((Entity) e).getId() == null|| ((Entity) e).getId() == 0){
-            try(PreparedStatement pstmt = DbConnection.getConnection().prepareStatement(getSaveStatement(),Statement.NO_GENERATED_KEYS)){
+            try(PreparedStatement pstmt = DbConnection.getConnection().prepareStatement(getSaveStatement(),Statement.RETURN_GENERATED_KEYS)){
                 coposeSaveOrUpdateStatement(pstmt, e);
                 pstmt.executeUpdate();
                 ResultSet resultSet = pstmt.getGeneratedKeys();

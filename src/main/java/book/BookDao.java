@@ -25,7 +25,7 @@ public class BookDao extends Dao<Book>{
 
     @Override
     public String getSaveStatement(){
-        return "INSET INTO "+ TABLE + "(title, authors, acquisition, pages, year, edition, price) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        return "INSERT INTO " + TABLE + "(title, authors, acquisition, pages, year, edition, price) VALUES (?, ?, ?, ?, ?, ?, ?)";
     }
     
     @Override
@@ -58,6 +58,10 @@ public class BookDao extends Dao<Book>{
             pststm.setShort(5, e.getYear());
             pststm.setByte(6, e.getEdition());
             pststm.setBigDecimal(7, e.getPrice());
+            
+            if (e.getId() != null) {
+                pststm.setLong(8, e.getId());
+            }
         } catch (SQLException ex) {
             Logger.getLogger(BookDao.class.getName()).log(Level.SEVERE, null, ex);
         }
